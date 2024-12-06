@@ -32,18 +32,16 @@ const popupContainer = d3.select("body")
     .style("overflow", "auto")
     .style("opacity", "0.9");
 
-const chartWidth = 800;
-const chartHeight = 600;
 const chartSvg = d3.select("body")
     .append("svg")
     .attr("class", "chart-container")
-    .attr("width", chartWidth)
-    .attr("height", chartHeight)
+    .attr("width", width)
+    .attr("height", height)
     .style("display", "none") 
     .attr("id", "lineChart")
     .style("position", "absolute")
-    .style("left", "50px")
-    .style("top", "200px");
+    .style("left", "3px")
+    .style("top", "3px");
 
 let clickedLabel = false;
 let clickedLine = false;
@@ -263,17 +261,17 @@ const interactiveLabels = labels.filter(d => targetValues.includes(d.Use))
         // Set up scales
         const xScale = d3.scalePoint()
             .domain(validData.map(d => d.time))
-            .range([50, chartWidth - 50]);
+            .range([50, width - 50]);
     
         const yScale = d3.scaleLinear()
             .domain([0, d3.max(validData, d => d.value)])
-            .range([chartHeight - 50, 50]);
+            .range([height - 50, 50]);
     
         const tickValues = validData.map(d => d.time).filter((_, i) => i % 10 === 0);
     
         // Add x-axis
         const xAxis = chartSvg.append("g")
-            .attr("transform", `translate(0,${chartHeight - 50})`)
+            .attr("transform", `translate(0,${height - 50})`)
             .call(
                 d3.axisBottom(xScale)
                     .tickValues(validData.map(d => d.time))
@@ -293,8 +291,8 @@ const interactiveLabels = labels.filter(d => targetValues.includes(d.Use))
 
         chartSvg.append("text")
             .attr("class", "axis-label")
-            .attr("x", chartWidth / 2) // Center the label horizontally
-            .attr("y", chartHeight - 10) // Below the x-axis
+            .attr("x", width / 2) // Center the label horizontally
+            .attr("y", height - 10) // Below the x-axis
             .attr("text-anchor", "middle")
             .attr("font-size", "16px")
             .attr("fill", "black")
@@ -304,7 +302,7 @@ const interactiveLabels = labels.filter(d => targetValues.includes(d.Use))
         chartSvg.append("text")
         .attr("class", "axis-label")
             .attr("transform", "rotate(-90)") // Rotate the text
-            .attr("x", -chartHeight / 2) // Center vertically (after rotation)
+            .attr("x", -height / 2) // Center vertically (after rotation)
             .attr("y", 20) // Left of the y-axis
             .attr("text-anchor", "middle")
             .attr("font-size", "16px")
@@ -319,8 +317,8 @@ const interactiveLabels = labels.filter(d => targetValues.includes(d.Use))
         const path = chartSvg.append("path")
             .datum(validData)
             .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-width", 4)
+            .attr("stroke", "black")
+            .attr("stroke-width", 8)
             .attr("d", line)
             .style("cursor", "pointer")
             .attr("stroke-dasharray", function () {
@@ -428,7 +426,7 @@ const interactiveLabels = labels.filter(d => targetValues.includes(d.Use))
     
         // Add close button for the chart
         chartSvg.append("rect")
-            .attr("x", chartWidth - 60)
+            .attr("x", width - 60)
             .attr("y", 20)
             .attr("width", 20)
             .attr("height", 20)
@@ -448,7 +446,7 @@ const interactiveLabels = labels.filter(d => targetValues.includes(d.Use))
             });
     
         chartSvg.append("text")
-            .attr("x", chartWidth - 50)
+            .attr("x", width - 50)
             .attr("y", 32)
             .attr("text-anchor", "middle")
             .attr("dominant-baseline", "middle")
