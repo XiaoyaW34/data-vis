@@ -311,8 +311,9 @@ const interactiveLabels = labels.filter(d => targetValues.includes(d.Use))
     
         // Add line
         const line = d3.line()
-            .x(d => xScale(d.time))
-            .y(d => yScale(d.value));
+    .curve(d3.curveBasis) 
+    .x(d => xScale(d.time)) 
+    .y(d => yScale(d.value));
     
         const path = chartSvg.append("path")
             .datum(validData)
